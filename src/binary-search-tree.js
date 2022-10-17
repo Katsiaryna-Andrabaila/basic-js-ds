@@ -71,8 +71,8 @@ class BinarySearchTree {
     
     function hasData(node, data) {
       if (!node) return false;
-      if (data === node.value) return true;
-      if (node.value > data) {
+      if (data === node.data) return true;
+      if (node.data > data) {
           return hasData(node.left, data);
       } else {
           return hasData(node.right, data);
@@ -81,15 +81,15 @@ class BinarySearchTree {
   }
 
   find(data) {
-    return findData(this.data, data);
+    return findData(this.value, data);
 
     function findData(node, data) {
       if (!node) return null;
       if (data === node.data) return node;
       if (node.data > data) {
-        return hasData(node.left, data);
+        return findData(node.left, data);
       } else if (node.data < data) {
-        return hasData(node.right, data);
+        return findData(node.right, data);
       }
       return null;
     }
@@ -100,12 +100,15 @@ class BinarySearchTree {
   }
 
   min() {
-    if (!this.value) return null;
-    if (this.left === null) {
-      return this.value;
-    } else {
-      return this.left.min();
-    } 
+    return findMin(this.value);
+    function findMin(node) {
+      if (!node) return null;
+      if (!node.left) {
+        return node.data;
+      } else {
+        return findMin(node.left);
+      }
+    }
   }
 
   max() {
@@ -113,7 +116,7 @@ class BinarySearchTree {
     function findMax(node) {
       if (!node) return null;
       if (!node.right) {
-        return node.value;
+        return node.data;
       } else {
         return findMax(node.right);
       }
