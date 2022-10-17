@@ -23,52 +23,25 @@ const { ListNode } = require('../extensions/list-node.js');
   }*/
  
 function removeKFromList(list, k) {
-let searchNode = null;
-while (this.head && this.head.value === k) {
-  searchNode = this.head;
-  this.head = this.head.next;
-}
+  let arr = [];
+  let current = list;
 
-let current = this.head;
-if (current !== null) {
-  while (current.next) {
-    if (current.next.value === k) {
-      searchNode = current.next;
-      current.next = current.next.next;
-    } else {
-      current = current.next;
-    }
-  }
-}
-
-if (this.tail && this.tail.value === k) {
-  this.tail = current;
-}
-
-return this;
-
-  /*let indexK = list.indexOf(k);
-  if (indexK === 0) {
-    this.head = this.head.next;
-    this.length--;
-  }
-  let current = this.head;
-  let prev;
-  let index = 0;
-
-  while (index < k) {
-    index++;
-    prev = current;
+  while (current) {
+    arr.push(current.value);
     current = current.next;
   }
 
-  const searchNode = current;
-  prev.next = current.next;
-  if (prev.next === null) {
-    this.tail = prev;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === k) {
+      arr.splice(i, 1);
+      i--;
+    }
   }
-  this.length--;
-  return this;*/
+
+  const createList = arr => arr.reduceRight((acc, n) => ({ value: n, next: acc }), null);
+
+  let result = createList(arr);
+  return result;
 }
 
 module.exports = {
